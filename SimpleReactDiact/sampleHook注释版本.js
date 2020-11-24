@@ -22,11 +22,6 @@ node.appendChild(text);
 container.appendChild(node);
  */
 
-const Didact = {
-  createElement,
-  render,
-};
-
 const element = Didact.createElement(
   "div",
   { id: "foo" },
@@ -190,8 +185,9 @@ function workLoop(deadline) {
   if (!nextUnitOfWork && wipRoot) {
     commitRoot(); //上部分只是生层了fiber属性有DOM，但在这里我才是插入到实际文本的DOM上去的
   }
-  requestIdleCallback(workLoop);
+  requestIdleCallback(workLoop); //requestIdleCallback后台任务调度，浏览器闲置时才会运行该任务-这里是workLoop
 }
+requestIdleCallback(workLoop);
 
 function performUnitOfwork(fiber) {
   //这里开始使用fiber来构建tree，相比之前的最初版本fiber对象有了更多的属性-》如本身实体DOM作为属性，关系如sibling,parent,child等
@@ -267,7 +263,7 @@ function updateHostComponent(fiber) {
   if (!fiber.dom) {
     fiber.dom = createDom(fiber); //追踪DOM节点在fiber.dom属性;或者说fiber既存储真实的DOM也存储虚拟DOM那些属性
   }
-  reconcileChildren(fiber, iber.props.children); //创建fiber并把自己的第一个子节点且同级的兄弟节点都关联好
+  reconcileChildren(fiber, fiber.props.children); //创建fiber并把自己的第一个子节点且同级的兄弟节点都关联好
 }
 
 function reconcileChildren(wipFiber, elements) {
@@ -330,6 +326,12 @@ function reconcileChildren(wipFiber, elements) {
     index++;
   }
 }
+
+const Didact = {
+  createElement,
+  render,
+  useState,
+};
 
 //每个元素是一个fiber，每个fiber是一个工作单元
 /**
