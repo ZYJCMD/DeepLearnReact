@@ -1,7 +1,5 @@
 # DeepLearnReact
 
-## DeepLearning React <br>
-
 项目 1: build my own React-> follow **Diact（Hooks 版本）** <br>
 构建流程总结：<br>
 在这部分可能涉及到算法的就是：递归和迭代，从上到下与从下到上递归与循环<br>
